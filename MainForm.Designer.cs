@@ -63,6 +63,9 @@
             this.bingMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bingHybridMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bingSatelliteMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuItemDownload = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
             this.属性AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemQueryAttribute = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,9 +91,8 @@
             this.toolStripButtonQueryAttribute = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuItemDownload = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.工具TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xy转经纬度XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +105,7 @@
             this.制图DToolStripMenuItem,
             this.底图ToolStripMenuItem,
             this.属性AToolStripMenuItem,
+            this.工具TToolStripMenuItem,
             this.menuItemView});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -167,7 +170,7 @@
             // 
             this.menuItemAddPixelPoint.Image = ((System.Drawing.Image)(resources.GetObject("menuItemAddPixelPoint.Image")));
             this.menuItemAddPixelPoint.Name = "menuItemAddPixelPoint";
-            this.menuItemAddPixelPoint.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAddPixelPoint.Size = new System.Drawing.Size(178, 22);
             this.menuItemAddPixelPoint.Text = "添加像控点(&C)";
             this.menuItemAddPixelPoint.Click += new System.EventHandler(this.menuItemAddPixelPoint_Click);
             // 
@@ -175,39 +178,39 @@
             // 
             this.menuItemAddReferencePoint.Image = ((System.Drawing.Image)(resources.GetObject("menuItemAddReferencePoint.Image")));
             this.menuItemAddReferencePoint.Name = "menuItemAddReferencePoint";
-            this.menuItemAddReferencePoint.Size = new System.Drawing.Size(180, 22);
+            this.menuItemAddReferencePoint.Size = new System.Drawing.Size(178, 22);
             this.menuItemAddReferencePoint.Text = "添加参考点(&R)";
             this.menuItemAddReferencePoint.Click += new System.EventHandler(this.menuItemAddReferencePoint_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(175, 6);
             // 
             // menuItemClearPixelPoints
             // 
             this.menuItemClearPixelPoints.Name = "menuItemClearPixelPoints";
-            this.menuItemClearPixelPoints.Size = new System.Drawing.Size(180, 22);
+            this.menuItemClearPixelPoints.Size = new System.Drawing.Size(178, 22);
             this.menuItemClearPixelPoints.Text = "清空像控点(&D)";
             this.menuItemClearPixelPoints.Click += new System.EventHandler(this.menuItemClearPixelPoints_Click);
             // 
             // menuItemClearReferencePoints
             // 
             this.menuItemClearReferencePoints.Name = "menuItemClearReferencePoints";
-            this.menuItemClearReferencePoints.Size = new System.Drawing.Size(180, 22);
+            this.menuItemClearReferencePoints.Size = new System.Drawing.Size(178, 22);
             this.menuItemClearReferencePoints.Text = "清空参考点(&P)";
             this.menuItemClearReferencePoints.Click += new System.EventHandler(this.menuItemClearReferencePoints_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(175, 6);
             // 
             // menuItemSaveCoordinates
             // 
             this.menuItemSaveCoordinates.Image = ((System.Drawing.Image)(resources.GetObject("menuItemSaveCoordinates.Image")));
             this.menuItemSaveCoordinates.Name = "menuItemSaveCoordinates";
-            this.menuItemSaveCoordinates.Size = new System.Drawing.Size(180, 22);
+            this.menuItemSaveCoordinates.Size = new System.Drawing.Size(178, 22);
             this.menuItemSaveCoordinates.Text = "保存控制点坐标(&O)";
             this.menuItemSaveCoordinates.Click += new System.EventHandler(this.menuItemSaveCoordinates_Click);
             // 
@@ -232,7 +235,7 @@
             // 
             this.menuItemDrawMarker.Image = ((System.Drawing.Image)(resources.GetObject("menuItemDrawMarker.Image")));
             this.menuItemDrawMarker.Name = "menuItemDrawMarker";
-            this.menuItemDrawMarker.Size = new System.Drawing.Size(180, 22);
+            this.menuItemDrawMarker.Size = new System.Drawing.Size(175, 22);
             this.menuItemDrawMarker.Text = "绘点 - 标记(&M)";
             this.menuItemDrawMarker.Click += new System.EventHandler(this.menuItemDrawMarker_Click);
             // 
@@ -240,7 +243,7 @@
             // 
             this.menuItemDrawRoute.Image = ((System.Drawing.Image)(resources.GetObject("menuItemDrawRoute.Image")));
             this.menuItemDrawRoute.Name = "menuItemDrawRoute";
-            this.menuItemDrawRoute.Size = new System.Drawing.Size(180, 22);
+            this.menuItemDrawRoute.Size = new System.Drawing.Size(175, 22);
             this.menuItemDrawRoute.Text = "绘线 - 路径(&R)";
             this.menuItemDrawRoute.Click += new System.EventHandler(this.menuItemDrawRoute_Click);
             // 
@@ -248,20 +251,20 @@
             // 
             this.menuItemDrawPolygon.Image = ((System.Drawing.Image)(resources.GetObject("menuItemDrawPolygon.Image")));
             this.menuItemDrawPolygon.Name = "menuItemDrawPolygon";
-            this.menuItemDrawPolygon.Size = new System.Drawing.Size(180, 22);
+            this.menuItemDrawPolygon.Size = new System.Drawing.Size(175, 22);
             this.menuItemDrawPolygon.Text = "绘面 - 多边形(&P)";
             this.menuItemDrawPolygon.Click += new System.EventHandler(this.menuItemDrawPolygon_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(172, 6);
             // 
             // menuItemExportSketch
             // 
             this.menuItemExportSketch.Image = ((System.Drawing.Image)(resources.GetObject("menuItemExportSketch.Image")));
             this.menuItemExportSketch.Name = "menuItemExportSketch";
-            this.menuItemExportSketch.Size = new System.Drawing.Size(180, 22);
+            this.menuItemExportSketch.Size = new System.Drawing.Size(175, 22);
             this.menuItemExportSketch.Text = "保存草图(&E)";
             this.menuItemExportSketch.Click += new System.EventHandler(this.menuItemExportSketch_Click);
             // 
@@ -269,33 +272,33 @@
             // 
             this.menuItemExportTransformedSketch.Image = ((System.Drawing.Image)(resources.GetObject("menuItemExportTransformedSketch.Image")));
             this.menuItemExportTransformedSketch.Name = "menuItemExportTransformedSketch";
-            this.menuItemExportTransformedSketch.Size = new System.Drawing.Size(180, 22);
+            this.menuItemExportTransformedSketch.Size = new System.Drawing.Size(175, 22);
             this.menuItemExportTransformedSketch.Text = "保存草图并转换(&S)";
             this.menuItemExportTransformedSketch.Click += new System.EventHandler(this.menuItemExportTransformedSketch_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(172, 6);
             // 
             // menuItemClearSketchPoints
             // 
             this.menuItemClearSketchPoints.Name = "menuItemClearSketchPoints";
-            this.menuItemClearSketchPoints.Size = new System.Drawing.Size(180, 22);
+            this.menuItemClearSketchPoints.Size = new System.Drawing.Size(175, 22);
             this.menuItemClearSketchPoints.Text = "清除草图点(&I)";
             this.menuItemClearSketchPoints.Click += new System.EventHandler(this.menuItemClearSketchPoints_Click);
             // 
             // menuItemClearSketchPolylines
             // 
             this.menuItemClearSketchPolylines.Name = "menuItemClearSketchPolylines";
-            this.menuItemClearSketchPolylines.Size = new System.Drawing.Size(180, 22);
+            this.menuItemClearSketchPolylines.Size = new System.Drawing.Size(175, 22);
             this.menuItemClearSketchPolylines.Text = "清除草图线(&L)";
             this.menuItemClearSketchPolylines.Click += new System.EventHandler(this.menuItemClearSketchPolylines_Click);
             // 
             // menuItemClearSketchPolygons
             // 
             this.menuItemClearSketchPolygons.Name = "menuItemClearSketchPolygons";
-            this.menuItemClearSketchPolygons.Size = new System.Drawing.Size(180, 22);
+            this.menuItemClearSketchPolygons.Size = new System.Drawing.Size(175, 22);
             this.menuItemClearSketchPolygons.Text = "清除草图面(&A)";
             this.menuItemClearSketchPolygons.Click += new System.EventHandler(this.menuItemClearSketchPolygons_Click);
             // 
@@ -371,6 +374,25 @@
             this.bingSatelliteMapToolStripMenuItem.Text = "BingSatelliteMap";
             this.bingSatelliteMapToolStripMenuItem.Click += new System.EventHandler(this.ChangeMapSource);
             // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(220, 6);
+            // 
+            // menuItemDownload
+            // 
+            this.menuItemDownload.Name = "menuItemDownload";
+            this.menuItemDownload.Size = new System.Drawing.Size(223, 22);
+            this.menuItemDownload.Text = "下载离线地图(&O)";
+            this.menuItemDownload.Click += new System.EventHandler(this.menuItemDownload_Click);
+            // 
+            // menuItemExport
+            // 
+            this.menuItemExport.Name = "menuItemExport";
+            this.menuItemExport.Size = new System.Drawing.Size(223, 22);
+            this.menuItemExport.Text = "导出离线地图(&A)";
+            this.menuItemExport.Click += new System.EventHandler(this.menuItemExport_Click);
+            // 
             // 属性AToolStripMenuItem
             // 
             this.属性AToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -383,7 +405,7 @@
             // 
             this.menuItemQueryAttribute.Image = ((System.Drawing.Image)(resources.GetObject("menuItemQueryAttribute.Image")));
             this.menuItemQueryAttribute.Name = "menuItemQueryAttribute";
-            this.menuItemQueryAttribute.Size = new System.Drawing.Size(180, 22);
+            this.menuItemQueryAttribute.Size = new System.Drawing.Size(163, 22);
             this.menuItemQueryAttribute.Text = "查询实体属性(&E)";
             this.menuItemQueryAttribute.Click += new System.EventHandler(this.menuItemQueryAttribute_Click);
             // 
@@ -597,24 +619,19 @@
             this.dockPanel.Size = new System.Drawing.Size(737, 464);
             this.dockPanel.TabIndex = 3;
             // 
-            // toolStripMenuItem8
+            // 工具TToolStripMenuItem
             // 
-            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(220, 6);
+            this.工具TToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xy转经纬度XToolStripMenuItem});
+            this.工具TToolStripMenuItem.Name = "工具TToolStripMenuItem";
+            this.工具TToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
+            this.工具TToolStripMenuItem.Text = "工具(&T)";
             // 
-            // menuItemDownload
+            // xy转经纬度XToolStripMenuItem
             // 
-            this.menuItemDownload.Name = "menuItemDownload";
-            this.menuItemDownload.Size = new System.Drawing.Size(223, 22);
-            this.menuItemDownload.Text = "下载离线地图(&O)";
-            this.menuItemDownload.Click += new System.EventHandler(this.menuItemDownload_Click);
-            // 
-            // menuItemExport
-            // 
-            this.menuItemExport.Name = "menuItemExport";
-            this.menuItemExport.Size = new System.Drawing.Size(223, 22);
-            this.menuItemExport.Text = "导出离线地图(&A)";
-            this.menuItemExport.Click += new System.EventHandler(this.menuItemExport_Click);
+            this.xy转经纬度XToolStripMenuItem.Name = "xy转经纬度XToolStripMenuItem";
+            this.xy转经纬度XToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.xy转经纬度XToolStripMenuItem.Text = "西安80坐标转经纬度(&X)";
             // 
             // MainForm
             // 
@@ -629,7 +646,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
-            this.Text = "WebMap Transform Studio";
+            this.Text = "地图浏览器";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
@@ -707,5 +724,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem menuItemDownload;
         private System.Windows.Forms.ToolStripMenuItem menuItemExport;
+        private System.Windows.Forms.ToolStripMenuItem 工具TToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xy转经纬度XToolStripMenuItem;
     }
 }

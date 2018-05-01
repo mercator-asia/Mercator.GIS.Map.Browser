@@ -391,7 +391,10 @@ namespace Mercator.GIS.Map.Browser
             var marker = m_pointOverlay.Markers[index];
             var projection = new GaussKrugerProjection();
             projection.Ellipsoid = ReferenceEllipsoid.International1975;
+            projection.LongitudeOfOrigin = Math.Round(marker.Position.Lng / 3) * 3;
             projection.Forward(marker.Position.Lat, marker.Position.Lng, out adfX[0], out adfY[0]);
+
+            adfX[0] = adfX[0] + projection.LongitudeOfOrigin / 3 * 1000000;
         }
 
         public void GetSketchPointInfo(int index, ref double[] adfX, ref double[] adfY, ref double[] adfZ, Matrix param4)
@@ -399,13 +402,14 @@ namespace Mercator.GIS.Map.Browser
             var marker = m_pointOverlay.Markers[index];
             var projection = new GaussKrugerProjection();
             projection.Ellipsoid = ReferenceEllipsoid.International1975;
+            projection.LongitudeOfOrigin = Math.Round(marker.Position.Lng / 3) * 3;
             projection.Forward(marker.Position.Lat, marker.Position.Lng, out adfX[0], out adfY[0]);
 
             var sourceCoordinate = new HorizontalCoordinate(adfX[0], adfY[0]);
             var targetCoordinate = LinearTransformation.Transform(sourceCoordinate, param4);
 
-            adfX[0] = targetCoordinate.Y;
-            adfY[0] = targetCoordinate.X;
+            adfX[0] = targetCoordinate.X + projection.LongitudeOfOrigin / 3 * 1000000;
+            adfY[0] = targetCoordinate.Y;
         }
 
         public int GetSketchPolylinePointCount(int index)
@@ -427,7 +431,10 @@ namespace Mercator.GIS.Map.Browser
 
             for (int i=0;i<route.Points.Count;i++)
             {
+                projection.LongitudeOfOrigin = Math.Round(route.Points[i].Lng / 3) * 3;
                 projection.Forward(route.Points[i].Lat, route.Points[i].Lng, out adfX[i], out adfY[i]);
+
+                adfX[i] = adfX[i] + projection.LongitudeOfOrigin / 3 * 1000000;
             }
         }
 
@@ -440,13 +447,14 @@ namespace Mercator.GIS.Map.Browser
 
             for (int i = 0; i < route.Points.Count; i++)
             {
+                projection.LongitudeOfOrigin = Math.Round(route.Points[i].Lng / 3) * 3;
                 projection.Forward(route.Points[i].Lat, route.Points[i].Lng, out adfX[i], out adfY[i]);
 
                 var sourceCoordinate = new HorizontalCoordinate(adfX[i], adfY[i]);
                 var targetCoordinate = LinearTransformation.Transform(sourceCoordinate, param4);
 
-                adfX[i] = targetCoordinate.Y;
-                adfY[i] = targetCoordinate.X;
+                adfX[i] = targetCoordinate.X + projection.LongitudeOfOrigin / 3 * 1000000;
+                adfY[i] = targetCoordinate.Y;
             }
         }
 
@@ -459,7 +467,9 @@ namespace Mercator.GIS.Map.Browser
 
             for (int i = 0; i < polygon.Points.Count; i++)
             {
+                projection.LongitudeOfOrigin = Math.Round(polygon.Points[i].Lng / 3) * 3;
                 projection.Forward(polygon.Points[i].Lat, polygon.Points[i].Lng, out adfX[i], out adfY[i]);
+                adfX[i] = adfX[i] + projection.LongitudeOfOrigin / 3 * 1000000;
             }
 
         }
@@ -473,13 +483,14 @@ namespace Mercator.GIS.Map.Browser
 
             for (int i = 0; i < polygon.Points.Count; i++)
             {
+                projection.LongitudeOfOrigin = Math.Round(polygon.Points[i].Lng / 3) * 3;
                 projection.Forward(polygon.Points[i].Lat, polygon.Points[i].Lng, out adfX[i], out adfY[i]);
 
                 var sourceCoordinate = new HorizontalCoordinate(adfX[i], adfY[i]);
                 var targetCoordinate = LinearTransformation.Transform(sourceCoordinate, param4);
 
-                adfX[i] = targetCoordinate.Y;
-                adfY[i] = targetCoordinate.X;
+                adfX[i] = targetCoordinate.X + projection.LongitudeOfOrigin / 3 * 1000000;
+                adfY[i] = targetCoordinate.Y;
             }
 
         }
@@ -493,21 +504,14 @@ namespace Mercator.GIS.Map.Browser
         /// <returns></returns>
         private HorizontalCoordinate GetTransformedPoint(double x, double y, Matrix param4)
         {
-            var projection = new GaussKrugerProjection();
-            projection.Ellipsoid = ReferenceEllipsoid.International1975;
+            var offset = ((int)x / 1000000) * 1000000;
 
-            // 根据x,y获取经纬度
-            double lat, lng;
-            projection.Reverse(x, y,out lat,out lng);
-            // 计算偏移量（大数）
-            var offset = (int)(y / 1000000) * 1000000;
-            // 坐标转换（不要加大数）
-            var sourceCoordinate = new HorizontalCoordinate(x, y - offset);
+            // 坐标转换
+            x = x - offset;
+            var sourceCoordinate = new HorizontalCoordinate(x, y);
             var targetCoordinate = LinearTransformation.Transform(sourceCoordinate, param4);
-            // 带大数的坐标
-            var xyWithZone = new HorizontalCoordinate(targetCoordinate.X, targetCoordinate.Y + offset);
 
-            return xyWithZone;
+            return new HorizontalCoordinate(targetCoordinate.X + offset, targetCoordinate.Y);
         }
 
         private void mapControl_OnMarkerClick(GMapMarker item, MouseEventArgs e)

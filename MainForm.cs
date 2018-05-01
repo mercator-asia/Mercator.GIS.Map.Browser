@@ -16,8 +16,8 @@ using System.Runtime.InteropServices;
 using Mercator.GIS.Coordinate;
 using Mercator.GIS.Map.Tools;
 using Mercator.GIS.Coordinate.KVS;
-using Mercator.Mathematics.LinearAlgebra;
 using Mercator.GIS.Projection;
+using Mercator.Mathematics.LinearAlgebra;
 
 namespace Mercator.GIS.Map.Browser
 {
@@ -276,40 +276,71 @@ namespace Mercator.GIS.Map.Browser
         /// <returns></returns>
         private RectLatLng GetShapeRect(double[] adfMinBound, double[] adfMaxBound, Matrix param4)
         {
+            double minX, minY, maxX, maxY;
+
+            minX = adfMinBound[0];
+            minY = adfMinBound[1];
+
+            var minZone = (int)minX / 1000000;
+            minX = minX - minZone * 1000000;
+
+            maxX = adfMaxBound[0];
+            maxY = adfMaxBound[1];
+
+            var maxZone = (int)maxX / 1000000;
+            maxX = maxX - maxZone * 1000000;
+
+            // 坐标转换（不要加大数）
+            var minXY = LinearTransformation.Transform(new HorizontalCoordinate(minX, minY), param4);
+            var maxXY = LinearTransformation.Transform(new HorizontalCoordinate(maxX, maxY), param4);
+
             var projection = new GaussKrugerProjection();
             projection.Ellipsoid = ReferenceEllipsoid.International1975;
 
-            // 计算偏移量（大数）
-            var minOffset = (int)(adfMinBound[0] / 1000000) * 1000000;
-            var maxOffset = (int)(adfMaxBound[0] / 1000000) * 1000000;
-            // 坐标转换（不要加大数）
-            var _minXY = LinearTransformation.Transform(new HorizontalCoordinate(adfMinBound[1], adfMinBound[0] - minOffset), param4);
-            var _maxXY = LinearTransformation.Transform(new HorizontalCoordinate(adfMaxBound[1], adfMaxBound[0] - minOffset), param4);
-            // 带大数的坐标
-            var _minXYWithZone = new HorizontalCoordinate(_minXY.X, _minXY.Y + minOffset);
-            var _maxXYWithZone = new HorizontalCoordinate(_maxXY.X, _maxXY.Y + maxOffset);
             // 再转成经纬度（加上大数，因为需要计算投影带号）
             double lat, lng;
-            projection.Reverse(_minXYWithZone.X, _minXYWithZone.Y, out lat, out lng);
-            var _minLB = new GeocentricCoordinate(lat, lng);
-            projection.Reverse(_maxXYWithZone.X, _maxXYWithZone.Y, out lat, out lng);
-            var _maxLB = new GeocentricCoordinate(lat, lng);
+
+            projection.LongitudeOfOrigin = minZone * 3;
+            projection.Reverse(minXY.X, minXY.Y, out lat, out lng);
+            var minLB = new GeocentricCoordinate(lat, lng);
+
+            projection.LongitudeOfOrigin = maxZone * 3;
+            projection.Reverse(maxXY.X, maxXY.Y, out lat, out lng);
+            var maxLB = new GeocentricCoordinate(lat, lng);
+
             // 取得图形范围用于显示
-            var rect = new RectLatLng(_maxLB.Latitude.Digital, _minLB.Longitude.Digital, _maxLB.Longitude.Digital - _minLB.Longitude.Digital, _maxLB.Latitude.Digital - _minLB.Latitude.Digital);
+            var rect = new RectLatLng(maxLB.Latitude.Digital, minLB.Longitude.Digital, maxLB.Longitude.Digital - minLB.Longitude.Digital, maxLB.Latitude.Digital - minLB.Latitude.Digital);
 
             return rect;
         }
 
         private RectLatLng GetShapeRect(double[] adfMinBound, double[] adfMaxBound)
         {
+            double minX, minY, maxX, maxY;
+
+            minX = adfMinBound[0];
+            minY = adfMinBound[1];
+
+            var minZone = (int)minX / 1000000;
+            minX = minX - minZone * 1000000;
+
+            maxX = adfMaxBound[0];
+            maxY = adfMaxBound[1];
+
+            var maxZone = (int)maxX / 1000000;
+            maxX = maxX - maxZone * 1000000;
+
             var projection = new GaussKrugerProjection();
             projection.Ellipsoid = ReferenceEllipsoid.International1975;
 
             double lat, lng;
-            projection.Reverse(adfMinBound[1], adfMinBound[0], out lat, out lng);
+
+            projection.LongitudeOfOrigin = minZone * 3;
+            projection.Reverse(minX, minY, out lat, out lng);
             var minLB = new GeocentricCoordinate(lat, lng);
 
-            projection.Reverse(adfMaxBound[1], adfMaxBound[0], out lat, out lng);
+            projection.LongitudeOfOrigin = maxZone * 3;
+            projection.Reverse(maxX, maxY, out lat, out lng);
             var maxLB = new GeocentricCoordinate(lat, lng);
 
             // 取得图形范围用于显示
@@ -329,16 +360,17 @@ namespace Mercator.GIS.Map.Browser
             var projection = new GaussKrugerProjection();
             projection.Ellipsoid = ReferenceEllipsoid.International1975;
 
-            // 计算偏移量（大数）
-            var offset = (int)(y / 1000000) * 1000000;
+            var zone = (int)x / 1000000;
+            x = x - zone * 1000000;
+
             // 坐标转换（不要加大数）
             var sourceCoordinate = new HorizontalCoordinate(x, y);
             var targetCoordinate = LinearTransformation.Transform(sourceCoordinate, param4);
-            // 带大数的坐标
-            var xyWithZone = new HorizontalCoordinate(targetCoordinate.X, targetCoordinate.Y + offset);
+
             // 再转成经纬度（加上大数，因为需要计算投影带号）
             double lat, lng;
-            projection.Reverse(x, y, out lat, out lng);
+            projection.LongitudeOfOrigin = zone * 3;
+            projection.Reverse(targetCoordinate.X, targetCoordinate.Y, out lat, out lng);
 
             return new PointLatLng(lat, lng);
         }
@@ -348,8 +380,13 @@ namespace Mercator.GIS.Map.Browser
             var projection = new GaussKrugerProjection();
             projection.Ellipsoid = ReferenceEllipsoid.International1975;
 
+            var zone = (int)x / 1000000;
+            x = x - zone * 1000000;
+
             // 根据x,y获取经纬度
             double lat, lng;
+
+            projection.LongitudeOfOrigin = zone * 3;
             projection.Reverse(x, y, out lat, out lng);
             return new PointLatLng(lat, lng);
         }
@@ -441,8 +478,11 @@ namespace Mercator.GIS.Map.Browser
             // 获取实体数、形状类型、界限坐标等信息
             Shapelib.SHPGetInfo(hSHP, ref pnEntities, ref pshpType, adfMinBound, adfMaxBound);
 
-            List<HorizontalCoordinate> sourceCoordinates, targetCoordinates;
-            KVS.Open(xmlFileName, out sourceCoordinates, out targetCoordinates);
+            var sourceCoordinates = new List<HorizontalCoordinate>();
+            var targetCoordinates = new List<HorizontalCoordinate>();
+
+            if (!string.IsNullOrEmpty(xmlFileName))
+                KVS.Open(xmlFileName, out sourceCoordinates, out targetCoordinates);
 
             var param4 = string.IsNullOrEmpty(xmlFileName) ? null : LinearTransformation.GetTransformationParameter(sourceCoordinates, targetCoordinates);
             var rect = string.IsNullOrEmpty(xmlFileName) ? GetShapeRect(adfMinBound, adfMaxBound) : GetShapeRect(adfMinBound, adfMaxBound, param4);
@@ -486,7 +526,7 @@ namespace Mercator.GIS.Map.Browser
                 switch (pshpType)
                 {
                     case Shapelib.ShapeType.Point:
-                        var pointMarker = string.IsNullOrEmpty(xmlFileName) ? GetPoint(padfY[0], padfX[0]) : GetTransformedPoint(padfY[0], padfX[0], param4);
+                        var pointMarker = string.IsNullOrEmpty(xmlFileName) ? GetPoint(padfX[0], padfY[0]) : GetTransformedPoint(padfX[0], padfY[0], param4);
                         points.Add(pointMarker);
                         UpdateOverlay(ref overlay, pshpType, points, entityName);
                         entityNode.Tag = overlay.Id;
@@ -496,7 +536,7 @@ namespace Mercator.GIS.Map.Browser
                         var maxPoint = new PointLatLng();
                         for (int i = 0; i < nVertices; i++)
                         {
-                            var point = string.IsNullOrEmpty(xmlFileName) ? GetPoint(padfY[i], padfX[i]) : GetTransformedPoint(padfY[i], padfX[i], param4);
+                            var point = string.IsNullOrEmpty(xmlFileName) ? GetPoint(padfX[i], padfY[i]) : GetTransformedPoint(padfX[i], padfY[i], param4);
                             points.Add(point);
 
                             if (i == 0)
@@ -770,7 +810,7 @@ namespace Mercator.GIS.Map.Browser
                 if (xmlDialog.ShowDialog() == DialogResult.OK)
                 {
                     List<HorizontalCoordinate> sourceCoordinates, targetCoordinates;
-                    KVS.Open(dialog.FileName, out sourceCoordinates, out targetCoordinates);
+                    KVS.Open(dialog.FileName, out targetCoordinates, out sourceCoordinates);
                     var param4 = LinearTransformation.GetTransformationParameter(sourceCoordinates, targetCoordinates);
 
                     var pathName = Path.GetDirectoryName(dialog.FileName);

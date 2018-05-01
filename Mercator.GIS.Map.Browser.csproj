@@ -74,7 +74,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>layer.ico</ApplicationIcon>
+    <ApplicationIcon>map.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
@@ -227,7 +227,7 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="layer.ico" />
+    <Content Include="map.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mercator.GIS.Coordinate\Mercator.GIS.Coordinate.KVS\Mercator.GIS.Coordinate.KVS.csproj">
@@ -246,12 +246,12 @@
       <Project>{5474a88e-134a-4b35-ba7e-552156fa8eb0}</Project>
       <Name>Mercator.GIS.Projection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mercator.Mathematics\Calculus\Mercator.Mathematics.Calculus.csproj">
+    <ProjectReference Include="..\Mercator.Mathematics.Calculus\Mercator.Mathematics.Calculus.csproj">
       <Project>{3f2bb295-c358-4385-b7eb-abe2238e0bec}</Project>
       <Name>Mercator.Mathematics.Calculus</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mercator.Mathematics\LinearAlgebra\Mercator.Mathematics.LinearAlgebra.csproj">
-      <Project>{7a88fdac-c409-4d20-9ac3-020ea08e73cb}</Project>
+    <ProjectReference Include="..\Mercator.Mathematics.LinearAlgebra\Mercator.Mathematics.LinearAlgebra.csproj">
+      <Project>{1e8e508c-1dcb-4b0e-abfb-1575210f17c3}</Project>
       <Name>Mercator.Mathematics.LinearAlgebra</Name>
     </ProjectReference>
   </ItemGroup>
