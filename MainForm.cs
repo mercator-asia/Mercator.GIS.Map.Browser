@@ -18,6 +18,8 @@ using Mercator.GIS.Map.Tools;
 using Mercator.GIS.Coordinate.KVS;
 using Mercator.GIS.Projection;
 using Mercator.Mathematics.LinearAlgebra;
+using Mercator.Excel;
+using NPOI.SS.UserModel;
 
 namespace Mercator.GIS.Map.Browser
 {
@@ -912,6 +914,80 @@ namespace Mercator.GIS.Map.Browser
                     {
                         MessageBox.Show("Failed!", "GMap.NET", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
+                }
+            }
+        }
+
+        private void xy2lbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Excel 97-2003 工作簿(*.xls)|*.xls";
+            if(dialog.ShowDialog()==DialogResult.OK)
+            {
+                var xlsFileName = dialog.FileName;
+                try
+                {
+                    var workbook = ExtendSheet.GetWorkbook(xlsFileName);
+                    var sheet = workbook.GetSheetAt(0);
+                    if (sheet == null) { return; }
+
+                    var columnXIndex = ExtendSheet.SearchColumn(sheet, "X");
+                    var columnYIndex = ExtendSheet.SearchColumn(sheet, "Y");
+
+                    var columnBIndex = ExtendSheet.SearchColumn(sheet, "纬度");
+                    if (columnBIndex < 0)
+                    {
+                        columnBIndex = sheet.GetRow(0).LastCellNum;
+                        sheet.GetRow(0).CreateCell(columnBIndex).SetCellValue("纬度");
+                    }
+                    var columnLIndex = ExtendSheet.SearchColumn(sheet, "经度");
+                    if (columnLIndex < 0)
+                    {
+                        columnLIndex = sheet.GetRow(0).LastCellNum;
+                        sheet.GetRow(0).CreateCell(columnLIndex).SetCellValue("经度");
+                    }
+
+                    for (int i = 1; i <= sheet.LastRowNum; i++)
+                    {
+                        var row = sheet.GetRow(i);
+
+                        var xCell = row.GetCell(columnXIndex);
+                        var yCell = row.GetCell(columnYIndex);
+
+                        if (xCell == null || yCell == null) { return; }
+
+                        var lCell = row.GetCell(columnLIndex);
+                        var bCell = row.GetCell(columnBIndex);
+
+                        if (lCell == null) { lCell = row.CreateCell(columnLIndex); }
+                        if (bCell == null) { bCell = row.CreateCell(columnBIndex); }
+
+                        var projection = new GaussKrugerProjection();
+                        projection.Ellipsoid = ReferenceEllipsoid.International1975;
+
+                        var x = xCell.NumericCellValue;
+                        var y = yCell.NumericCellValue;
+
+                        var zone = (int)x / 1000000;
+                        projection.LongitudeOfOrigin = zone * 3;
+                        x = x - zone * 1000000;
+
+                        double lat, lng;
+                        projection.Reverse(x, y, out lat, out lng);
+
+                        var point = new GeocentricCoordinate(lat, lng);
+                        lCell.SetCellValue(point.Longitude.ToString());
+                        bCell.SetCellValue(point.Latitude.ToString());
+                    }
+                    using (FileStream fs = File.Open(xlsFileName, FileMode.Open, FileAccess.Write))
+                    {
+                        workbook.Write(fs);
+                        System.Diagnostics.Process.Start("explorer.exe", Path.GetDirectoryName(xlsFileName));
+                    }  
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

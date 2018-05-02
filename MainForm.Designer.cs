@@ -68,6 +68,8 @@
             this.menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
             this.属性AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemQueryAttribute = new System.Windows.Forms.ToolStripMenuItem();
+            this.工具TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xy2lbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLayerWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemPropertyWindow = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,8 +93,6 @@
             this.toolStripButtonQueryAttribute = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.工具TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.xy转经纬度XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -405,9 +405,24 @@
             // 
             this.menuItemQueryAttribute.Image = ((System.Drawing.Image)(resources.GetObject("menuItemQueryAttribute.Image")));
             this.menuItemQueryAttribute.Name = "menuItemQueryAttribute";
-            this.menuItemQueryAttribute.Size = new System.Drawing.Size(163, 22);
+            this.menuItemQueryAttribute.Size = new System.Drawing.Size(180, 22);
             this.menuItemQueryAttribute.Text = "查询实体属性(&E)";
             this.menuItemQueryAttribute.Click += new System.EventHandler(this.menuItemQueryAttribute_Click);
+            // 
+            // 工具TToolStripMenuItem
+            // 
+            this.工具TToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xy2lbToolStripMenuItem});
+            this.工具TToolStripMenuItem.Name = "工具TToolStripMenuItem";
+            this.工具TToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
+            this.工具TToolStripMenuItem.Text = "工具(&T)";
+            // 
+            // xy2lbToolStripMenuItem
+            // 
+            this.xy2lbToolStripMenuItem.Name = "xy2lbToolStripMenuItem";
+            this.xy2lbToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.xy2lbToolStripMenuItem.Text = "西安80坐标转经纬度(&X)";
+            this.xy2lbToolStripMenuItem.Click += new System.EventHandler(this.xy2lbToolStripMenuItem_Click);
             // 
             // menuItemView
             // 
@@ -619,20 +634,6 @@
             this.dockPanel.Size = new System.Drawing.Size(737, 464);
             this.dockPanel.TabIndex = 3;
             // 
-            // 工具TToolStripMenuItem
-            // 
-            this.工具TToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.xy转经纬度XToolStripMenuItem});
-            this.工具TToolStripMenuItem.Name = "工具TToolStripMenuItem";
-            this.工具TToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
-            this.工具TToolStripMenuItem.Text = "工具(&T)";
-            // 
-            // xy转经纬度XToolStripMenuItem
-            // 
-            this.xy转经纬度XToolStripMenuItem.Name = "xy转经纬度XToolStripMenuItem";
-            this.xy转经纬度XToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.xy转经纬度XToolStripMenuItem.Text = "西安80坐标转经纬度(&X)";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -725,6 +726,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemDownload;
         private System.Windows.Forms.ToolStripMenuItem menuItemExport;
         private System.Windows.Forms.ToolStripMenuItem 工具TToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem xy转经纬度XToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xy2lbToolStripMenuItem;
     }
 }

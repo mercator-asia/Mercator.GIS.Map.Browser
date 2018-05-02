@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercator.Mathematics.Calcul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercator.Mathematics.LinearAlgebra", "..\Mercator.Mathematics.LinearAlgebra\Mercator.Mathematics.LinearAlgebra.csproj", "{1E8E508C-1DCB-4B0E-ABFB-1575210F17C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercator.Excel", "..\Mercator.Excel\Mercator.Excel.csproj", "{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{1E8E508C-1DCB-4B0E-ABFB-1575210F17C3}.Release|x64.Build.0 = Release|x64
 		{1E8E508C-1DCB-4B0E-ABFB-1575210F17C3}.Release|x86.ActiveCfg = Release|x86
 		{1E8E508C-1DCB-4B0E-ABFB-1575210F17C3}.Release|x86.Build.0 = Release|x86
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Debug|x64.ActiveCfg = Debug|x64
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Debug|x64.Build.0 = Debug|x64
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Debug|x86.ActiveCfg = Debug|x86
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Debug|x86.Build.0 = Debug|x86
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Release|x64.ActiveCfg = Release|x64
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Release|x64.Build.0 = Release|x64
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Release|x86.ActiveCfg = Release|x86
+		{106501A9-5CE1-4896-9DFD-B45A01EE0FF5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
